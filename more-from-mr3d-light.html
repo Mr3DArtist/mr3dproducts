@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>More from Mr3D — Light</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+/* ===== LIGHT THEME ONLY ===== */
+:root{
+  --bg:#ffffff;--ink:#111827;--card-bg:rgba(255,255,255,.85);--card-bg-strong:#fff;
+  --border:rgba(0,0,0,.08);--border-strong:rgba(0,0,0,.18);--muted:#5f6470;
+  --glow-tertiary:color-mix(in srgb,#111827 8%,transparent);--glow-accent:color-mix(in srgb,#737373 14%,transparent);
+  --shadow:0 26px 70px -26px rgba(0,0,0,.28);--shadow-light:0 14px 34px -20px rgba(0,0,0,.2);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:'Manrope',system-ui,sans-serif;background:#ffffff;color:var(--ink);line-height:1.6;overflow-x:hidden;display:flex;align-items:center}
+.container{width:min(1180px,94%);margin-inline:auto;position:relative;z-index:1}
+a{color:inherit}
+img{display:block;max-width:100%}
+.gallery-section{position:relative;width:100%;padding:52px 0 20px}
+.gallery-section::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:min(1180px,94%);height:3px;border-radius:999px;background:radial-gradient(circle at 50% 50%,#737373 0 4px,transparent 5px),linear-gradient(90deg,transparent,#111827 22%,#737373 50%,#111827 78%,transparent);opacity:.4}
+.seam-label{position:absolute;top:-14px;left:50%;transform:translateX(-50%);z-index:3;padding:.42rem 1.7rem;font-size:.82rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:#111827;background:#fff;border-radius:999px;box-shadow:0 0 0 1px rgba(0,0,0,.16),0 0 22px 4px rgba(17,24,39,.06);white-space:nowrap}
+.quickfog-outer{border:1px solid rgba(0,0,0,.12);border-radius:22px;background:#ffffff;padding:.55rem;box-shadow:0 24px 60px -28px rgba(0,0,0,.18);position:relative;outline:1px solid rgba(0,0,0,.2);outline-offset:0;transition:outline-offset .7s cubic-bezier(.19,1,.22,1),outline-color .7s cubic-bezier(.19,1,.22,1),box-shadow .3s ease}
+.quickfog-outer:hover{outline-color:transparent;outline-offset:12px;box-shadow:0 24px 60px -24px rgba(0,0,0,.24)}
+.gallery-head{display:flex;justify-content:flex-end;margin-bottom:1rem}
+.gallery-controls{display:flex;gap:.5rem}
+.g-arrow{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;cursor:pointer;background:rgba(255,255,255,.6);border:1px solid rgba(0,0,0,.22);color:#111827;outline:1px solid rgba(0,0,0,.3);outline-offset:0;transition:transform .2s ease,border-color .2s ease,outline-offset .7s cubic-bezier(.19,1,.22,1),outline-color .7s cubic-bezier(.19,1,.22,1)}
+.g-arrow:hover{transform:translateY(-2px);border-color:#111827;outline-color:transparent;outline-offset:8px}
+.g-arrow:disabled{opacity:.3;cursor:default;transform:none}
+.g-arrow svg{width:18px;height:18px}
+.gallery-viewport{overflow-x:auto;overflow-y:hidden;scrollbar-width:none;scroll-snap-type:x mandatory;scroll-behavior:smooth}
+.gallery-viewport::-webkit-scrollbar{display:none}
+.gallery-track{--g-gap:.9rem;display:flex;gap:var(--g-gap);list-style:none;padding:4px 2px}
+.g-card{flex:0 0 calc((100% - 3 * var(--g-gap)) / 4);scroll-snap-align:start;min-width:0}
+@media (max-width:1000px){.g-card{flex:0 0 calc((100% - 2 * var(--g-gap)) / 3)}}
+@media (max-width:640px){.g-card{flex:0 0 calc((100% - 1 * var(--g-gap)) / 2)}}
+@media (max-width:420px){.g-card{flex:0 0 82%}}
+.g-thumb{display:block;text-decoration:none;color:inherit}
+.g-frame{position:relative;display:block;border-radius:16px;overflow:hidden;aspect-ratio:1/1;border:1px solid rgba(0,0,0,.22);background:#fff;box-shadow:0 14px 32px -18px rgba(0,0,0,.35);outline:1px solid rgba(0,0,0,.35);outline-offset:0;transition:outline-offset .7s cubic-bezier(.19,1,.22,1),outline-color .7s cubic-bezier(.19,1,.22,1),box-shadow .3s ease}
+.g-thumb:hover .g-frame{outline-color:transparent;outline-offset:12px;box-shadow:0 24px 50px -22px rgba(0,0,0,.4)}
+.g-ph{position:absolute;inset:0;display:grid;place-items:center;transition:transform .55s cubic-bezier(.22,.61,.36,1)}
+.g-thumb:hover .g-ph{transform:scale(1.08)}
+.g-ph img{width:100%;height:100%;object-fit:cover;display:block}
+.gp-1{background:linear-gradient(140deg,#163a33,#0b1f1a)}
+.gp-2{background:linear-gradient(140deg,#3a3a16,#1a1a08)}
+.gp-3{background:linear-gradient(140deg,#143a42,#081c21)}
+.gp-4{background:linear-gradient(140deg,#243a16,#0f1c08)}
+.g-ph-tag{position:absolute;right:4px;bottom:3px;font-size:.55rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:.08rem .27rem;border-radius:9px;background:linear-gradient(140deg,#171717,#3f3f46) padding-box,conic-gradient(from var(--badge-angle),#737373,#d4d4d8,#fafafa,#d4d4d8,#737373) border-box;border:2px solid transparent;color:#fff;transform-origin:bottom right;transition:transform .55s cubic-bezier(.22,.61,.36,1);animation:badgeSpin 4s linear infinite}
+@property --badge-angle{syntax:'<angle>';initial-value:0deg;inherits:false}
+@keyframes badgeSpin{to{--badge-angle:360deg}}
+.g-thumb:hover .g-ph-tag{transform:scale(1.2)}
+.gallery-dots{display:flex;justify-content:center;gap:.5rem;margin-top:.6rem}
+.g-dot{width:8px;height:8px;border-radius:999px;border:0;padding:0;cursor:pointer;background:rgba(0,0,0,.3);transition:width .3s ease,background .3s ease}
+.g-dot.active{width:26px;background:#111827}
+.g-caption{display:none}
+.g-name{font-family:'Sora',sans-serif;font-weight:600;font-size:.95rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.g-cta{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#111827;opacity:0;transform:translateX(-4px);transition:opacity .25s ease,transform .25s ease;white-space:nowrap}
+.g-thumb:hover .g-cta{opacity:1;transform:none}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:none}
+/* particles */
+.section-particles{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+</style>
+</head>
+<body>
+<section class="gallery-section" id="gallery" aria-label="More add-ons by Mr3D">
+  <span class="seam-label">More from Mr3D</span>
+  <canvas class="section-particles" data-pattern="drift" aria-hidden="true"></canvas>
+  <div class="container">
+    <div class="gallery-head reveal">
+      <div class="gallery-controls">
+        <button class="g-arrow" id="gPrev" aria-label="Previous products" disabled>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+        </button>
+        <button class="g-arrow" id="gNext" aria-label="Next products">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="quickfog-outer reveal">
+      <div class="gallery-viewport" id="gViewport">
+        <ul class="gallery-track" id="gTrack">
+          <li class="g-card">
+            <a class="g-thumb" href="https://superhivemarket.com/products/gobos-master?ref=473" target="_blank" rel="noopener">
+              <span class="g-frame">
+                <span class="g-ph gp-1" role="img" aria-label="Auto Facial MoCap Pro">
+                  <img src="https://mr3d.carrd.co/assets/images/image02.jpg?v=ec7e0a36" alt="Auto Facial MoCap Pro" />
+                </span>
+                <span class="g-ph-tag hot">Featured</span>
+              </span>
+              <span class="g-caption"><span class="g-name">Auto Facial MoCap Pro</span><span class="g-cta">View &rarr;</span></span>
+            </a>
+          </li>
+          <li class="g-card">
+            <a class="g-thumb" href="https://superhivemarket.com/products/decalify?ref=473" target="_blank" rel="noopener">
+              <span class="g-frame">
+                <span class="g-ph gp-2" role="img" aria-label="True Dark Themes Pack">
+                  <img src="https://mr3d.carrd.co/assets/images/image07.jpg?v=52ab947c" alt="True Dark Themes Pack" />
+                </span>
+              </span>
+              <span class="g-caption"><span class="g-name">True Dark Themes Pack</span><span class="g-cta">View &rarr;</span></span>
+            </a>
+          </li>
+          <li class="g-card">
+            <a class="g-thumb" href="https://superhivemarket.com/products/true-dark-blender-themes-pack?ref=473" target="_blank" rel="noopener">
+              <span class="g-frame">
+                <span class="g-ph gp-3" role="img" aria-label="Gobos Master">
+                  <img src="https://mr3d.carrd.co/assets/images/image02.jpg?v=52ab947c" alt="Gobos Master" />
+                </span>
+              </span>
+              <span class="g-caption"><span class="g-name">Gobos Master</span><span class="g-cta">View &rarr;</span></span>
+            </a>
+          </li>
+          <li class="g-card">
+            <a class="g-thumb" href="https://superhivemarket.com/creators/mr3d?ref=473" target="_blank" rel="noopener">
+              <span class="g-frame">
+                <span class="g-ph gp-4" role="img" aria-label="Decalify">
+                  <img src="https://mr3d.carrd.co/assets/images/image08.gif?v=52ab947c" alt="Decalify" />
+                </span>
+              </span>
+              <span class="g-caption"><span class="g-name">Decalify</span><span class="g-cta">View &rarr;</span></span>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="gallery-dots" id="gDots" role="tablist" aria-label="Gallery pages"></div>
+    </div>
+  </div>
+</section>
+
+<script>
+/* Drift particles */
+(function () {
+  'use strict';
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelectorAll('.section-particles').forEach(function (canvas) {
+    var ctx = canvas.getContext('2d');
+    var section = canvas.parentElement;
+    var parts = [], w = 0, h = 0, mX = -9999, mY = -9999;
+    function size() {
+      var r = section.getBoundingClientRect();
+      w = r.width; h = r.height;
+      canvas.width = Math.max(1, Math.round(w));
+      canvas.height = Math.max(1, Math.round(h));
+      canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
+      var n = Math.max(10, Math.min(40, Math.round(w * h / 45000)));
+      parts = [];
+      for (var i = 0; i < n; i++) parts.push({ x: Math.random() * w, y: Math.random() * h, r: .8 + Math.random() * 1.6, ph: Math.random() * 6.28, vx: (Math.random() - .5) * .3, vy: (Math.random() - .5) * .3 });
+    }
+    function draw() {
+      ctx.clearRect(0, 0, w, h);
+      for (var i = 0; i < parts.length; i++) {
+        var p = parts[i];
+        p.ph += 0.008; p.x += p.vx + Math.sin(p.ph) * 0.2; p.y += p.vy;
+        if (p.x < -20) p.x = w + 20; else if (p.x > w + 20) p.x = -20;
+        if (p.y < -20) p.y = h + 20; else if (p.y > h + 20) p.y = -20;
+        var dx = p.x - mX, dy = p.y - mY, d = Math.sqrt(dx * dx + dy * dy);
+        if (d < 130 && d > 0.1) { p.x += (dx / d) * 1.5; p.y += (dy / d) * 1.5; }
+        ctx.globalAlpha = .7;
+        ctx.fillStyle = '#3f4756';
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.283); ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+    }
+    function loop() { draw(); requestAnimationFrame(loop); }
+    section.addEventListener('mousemove', function (e) { var r = canvas.getBoundingClientRect(); mX = e.clientX - r.left; mY = e.clientY - r.top; });
+    section.addEventListener('mouseleave', function () { mX = -9999; mY = -9999; });
+    size();
+    if (reduceMotion) draw(); else loop();
+    window.addEventListener('resize', size);
+  });
+})();
+</script>
+<script>
+(function () {
+  'use strict';
+  var viewport = document.getElementById('gViewport');
+  if (!viewport) return;
+  var track = document.getElementById('gTrack');
+  var prev = document.getElementById('gPrev');
+  var next = document.getElementById('gNext');
+  var dots = document.getElementById('gDots');
+  var cards = track ? track.children : [];
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function visible(){var w=viewport.clientWidth;if(w<=420)return 1;if(w<=640)return 2;if(w<=1000)return 3;return 4;}
+  function maxIdx(){return Math.max(0,cards.length-visible());}
+  function posArr(){var a=[];Array.prototype.forEach.call(cards,function(c){a.push(c.offsetLeft);});return a;}
+  function cur(){var s=viewport.scrollLeft,a=posArr(),b=0;for(var i=0;i<a.length;i++)if(Math.abs(a[i]-s)<Math.abs(a[b]-s))b=i;return b;}
+  function go(i){i=Math.max(0,Math.min(maxIdx(),i));viewport.scrollTo({left:(posArr()[i]||0),behavior:reduceMotion?'auto':'smooth'});}
+  prev.addEventListener('click',function(){go(cur()-1);});
+  next.addEventListener('click',function(){go(cur()+1);});
+  function renderDots(){
+    dots.innerHTML='';
+    for(var i=0;i<=maxIdx();i++){(function(idx){var b=document.createElement('button');b.className='g-dot'+(idx===0?' active':'');b.setAttribute('aria-label','Gallery page '+(idx+1));b.addEventListener('click',function(){go(idx);});dots.appendChild(b);})(i);}
+  }
+  function update(){
+    var c=cur(),ds=dots.children;
+    for(var i=0;i<ds.length;i++)ds[i].classList.toggle('active',i===c);
+    prev.disabled=c<=0;next.disabled=c>=maxIdx();
+    var ov=viewport.scrollWidth>viewport.clientWidth+1;
+    prev.style.display=ov?'':'none';next.style.display=ov?'':'none';dots.style.display=ov?'':'none';
+  }
+  viewport.addEventListener('scroll',update,{passive:true});
+  window.addEventListener('resize',function(){renderDots();update();});
+  renderDots();update();
+  var reveals=document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(en){en.target.classList.add('visible');io.unobserve(en.target);});},{threshold:.15});reveals.forEach(function(el){io.observe(el);});}
+  else{reveals.forEach(function(el){el.classList.add('visible');});}
+})();
+</script>
+</body>
+</html>
