@@ -32,13 +32,10 @@ img{display:block;max-width:100%}
 .g-arrow:hover{transform:translateY(-2px);border-color:#111827;outline-color:transparent;outline-offset:8px}
 .g-arrow:disabled{opacity:.3;cursor:default;transform:none}
 .g-arrow svg{width:18px;height:18px}
-.gallery-viewport{overflow-x:auto;overflow-y:hidden;scrollbar-width:none;scroll-snap-type:x mandatory;scroll-behavior:smooth}
-.gallery-viewport::-webkit-scrollbar{display:none}
-.gallery-track{--g-gap:.9rem;display:flex;gap:var(--g-gap);list-style:none;padding:4px 2px}
-.g-card{flex:0 0 calc((100% - 3 * var(--g-gap)) / 4);scroll-snap-align:start;min-width:0}
-@media (max-width:1000px){.g-card{flex:0 0 calc((100% - 2 * var(--g-gap)) / 3)}}
-@media (max-width:640px){.g-card{flex:0 0 calc((100% - 1 * var(--g-gap)) / 2)}}
-@media (max-width:420px){.g-card{flex:0 0 82%}}
+.gallery-head{display:none}
+.gallery-viewport{overflow:visible}
+.gallery-track{display:grid;grid-template-columns:repeat(4,1fr);gap:.9rem;list-style:none;padding:4px 2px}
+.g-card{min-width:0}
 .g-thumb{display:block;text-decoration:none;color:inherit}
 .g-frame{position:relative;display:block;border-radius:16px;overflow:hidden;aspect-ratio:1/1;border:1px solid rgba(0,0,0,.22);background:#fff;box-shadow:0 14px 32px -18px rgba(0,0,0,.35);outline:1px solid rgba(0,0,0,.35);outline-offset:0;transition:outline-offset .7s cubic-bezier(.19,1,.22,1),outline-color .7s cubic-bezier(.19,1,.22,1),box-shadow .3s ease}
 .g-thumb:hover .g-frame{outline-color:transparent;outline-offset:12px;box-shadow:0 24px 50px -22px rgba(0,0,0,.4)}
@@ -53,7 +50,7 @@ img{display:block;max-width:100%}
 @property --badge-angle{syntax:'<angle>';initial-value:0deg;inherits:false}
 @keyframes badgeSpin{to{--badge-angle:360deg}}
 .g-thumb:hover .g-ph-tag{transform:scale(1.2)}
-.gallery-dots{display:flex;justify-content:center;gap:.5rem;margin-top:.6rem}
+.gallery-dots{display:none}
 .g-dot{width:8px;height:8px;border-radius:999px;border:0;padding:0;cursor:pointer;background:rgba(0,0,0,.3);transition:width .3s ease,background .3s ease}
 .g-dot.active{width:26px;background:#111827}
 .g-caption{display:none}
